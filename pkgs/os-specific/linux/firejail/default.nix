@@ -19,11 +19,14 @@ stdenv.mkDerivation {
     inherit (s) url sha256;
   };
 
+  patches = [ ./bind.patch ];
+
   preConfigure = ''
     sed -e 's@/bin/bash@${stdenv.shell}@g' -i $( grep -lr /bin/bash .)
     sed -e '/void fs_var_run(/achar *vrcs = get_link("/var/run/current-system")\;' -i ./src/firejail/fs_var.c
     sed -e '/ \/run/iif(vrcs!=NULL){symlink(vrcs, "/var/run/current-system")\;free(vrcs)\;}' -i ./src/firejail/fs_var.c
     sed -e 's@/bin/cp@/run/current-system/sw/bin/cp@g' -i ./src/firejail/fs.c
+    sed -e 's/int rv = check_kernel_procs();/int rv = 1;/' -i ./src/firejail/main.c
   '';
 
   preBuild = ''

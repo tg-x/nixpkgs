@@ -1,0 +1,14 @@
+--- firejail/src/firejail/profile.c	2015-10-26 23:52:18.783389877 +0100
++++ firejail/src/firejail/profile-new.c	2015-10-26 23:54:39.148888300 +0100
+@@ -250,11 +250,6 @@
+ 
+ 	// filesystem bind
+ 	if (strncmp(ptr, "bind ", 5) == 0) {
+-		if (getuid() != 0) {
+-			fprintf(stderr, "Error: --bind option is available only if running as root\n");
+-			exit(1);
+-		}
+-
+ 		// extract two directories
+ 		char *dname1 = ptr + 5;
+ 		char *dname2 = split_comma(dname1); // this inserts a '0 to separate the two dierctories
