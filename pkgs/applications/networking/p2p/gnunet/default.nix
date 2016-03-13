@@ -71,9 +71,9 @@ stdenv.mkDerivation rec {
       network are rewarded with better service.
     '';
 
-    homepage = http://gnunet.org/;
+    homepage = https://gnunet.org/;
 
-    license = stdenv.lib.licenses.gpl2Plus;
+    license = stdenv.lib.licenses.gpl3Plus;
 
     maintainers = with stdenv.lib.maintainers; [ viric ];
     platforms = stdenv.lib.platforms.gnu;

@@ -2,10 +2,11 @@
 , zlib, gmp, curl, libtool, adns, sqlite, pkgconfig
 , libxml2, ncurses, gettext, libunistring, libidn
 , makeWrapper, autoconf, automake
-, withVerbose ? false }:
+, withVerbose ? true
+, enableExperimental ? true }:
 
 let
-  rev = "27840";
+  rev = "36928";
 in
 stdenv.mkDerivation rec {
   name = "gnunet-svn-${rev}";
@@ -13,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchsvn {
     url =  https://gnunet.org/svn/gnunet;
     inherit rev;
-    sha256 = "0zhxvvj5rbhca2ykfx3g93dv94xyhqsnj011a6gql7zd5vfhaf6v";
+    sha256 = "15ipj5pk6q5vd77l0l57383m04xgbbcs2fymvicwwig4hn9qi631";
   };
 
   buildInputs = [
@@ -23,7 +24,9 @@ stdenv.mkDerivation rec {
     autoconf automake
   ];
 
-  configureFlags = stdenv.lib.optional withVerbose "--enable-logging=verbose ";
+  configureFlags = [ "--enable-gcc-hardening" ]
+    ++ stdenv.lib.optional withVerbose "--enable-logging=verbose"
+    ++ stdenv.lib.optional enableExperimental "--enable-experimental";
 
   preConfigure = ''
     # Brute force: since nix-worker chroots don't provide
@@ -66,7 +69,7 @@ stdenv.mkDerivation rec {
   */
 
   meta = {
-    description = "GNUnet, GNU's decentralized anonymous and censorship-resistant P2P framework";
+    description = "GNUnet, GNU's framework for Secure Peer-to-Peer Networking";
 
     longDescription = ''
       GNUnet is a framework for secure peer-to-peer networking that
@@ -83,9 +86,9 @@ stdenv.mkDerivation rec {
       network are rewarded with better service.
     '';
 
-    homepage = http://gnunet.org/;
+    homepage = https://gnunet.org/;
 
-    license = stdenv.lib.licenses.gpl2Plus;
+    license = stdenv.lib.licenses.gpl3Plus;
 
     maintainers = with stdenv.lib.maintainers; [ viric ];
     platforms = stdenv.lib.platforms.gnu;
