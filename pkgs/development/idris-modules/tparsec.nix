@@ -4,13 +4,15 @@
 }:
 build-idris-package  {
   name = "tparsec";
-  version = "2018-06-26";
+  version = "2018-07-24";
+
+  ipkgName = "TParsec";
 
   src = fetchFromGitHub {
     owner = "gallais";
     repo = "idris-tparsec";
-    rev = "ca32d1a83f3de95f8979d48016e79d010f47b3c2";
-    sha256 = "1zjzk8xjmyyx1qwrdwwg7yjzcgj5wkbwpx8a3wpbj5sv4b5s2r30";
+    rev = "6e8ff200e985243771b549905f1ba1547158af02";
+    sha256 = "1cvm5pi8zd79jm1y1zw5nfk2gj0qrvsgd44gm6gsvmagf9irkc6p";
   };
 
   meta = {
